@@ -28,12 +28,12 @@ public class AMapPlugin extends CordovaPlugin {
         activity = cordova.getActivity();
         context = cordova.getContext();
         threadPool = cordova.getThreadPool();
-        LOG.v(TAG, "Plugin initialize success");
+        LOG.i(TAG, "Plugin initialize success");
     }
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        LOG.v(TAG, "Plugin Received A New Action" + action);
+        LOG.i(TAG, "Plugin Received A New Action" + action);
         if (MethodNames.CALCULATE_DISTANCE.equalsIgnoreCase(action)) {
             PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
             result.setKeepCallback(true);
@@ -50,7 +50,7 @@ public class AMapPlugin extends CordovaPlugin {
             callbackContext.sendPluginResult(result);
             getWeatherInfo(callbackContext, args);
         } else {
-            LOG.v(TAG, "The Action" + action + "Not Exist");
+            LOG.i(TAG, "The Action" + action + "Not Exist");
             PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, "方法调用失败，不存在该方法");
             result.setKeepCallback(false);
             callbackContext.sendPluginResult(result);
@@ -64,22 +64,20 @@ public class AMapPlugin extends CordovaPlugin {
         String CALCULATE_DISTANCE = "calculateDistance";
     }
 
-    private void getLocation(CallbackContext callbackContext, JSONArray array) {
+    private void getLocation(CallbackContext callbackContext, JSONArray args) {
         AMapLocationClient aMapLocationClient = new AMapLocationClient(context);
-        AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
-        mLocationOption.setNeedAddress(true);
-        aMapLocationClient.setLocationListener(new AMapLocationListener(callbackContext));
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        mLocationOption.setInterval(2000);
-        aMapLocationClient.setLocationOption(mLocationOption);
+        aMapLocationClient.setLocationListener(new AMapLocationListener(callbackContext, aMapLocationClient));
+        AMapLocationClientOption aMapLocationClientOption = new AMapLocationClientOption().setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.SignIn);
+        aMapLocationClient.setLocationOption(aMapLocationClientOption);
+        aMapLocationClient.stopLocation();
         aMapLocationClient.startLocation();
     }
 
-    private void getWeatherInfo(CallbackContext callbackContext, JSONArray array) {
+    private void getWeatherInfo(CallbackContext callbackContext, JSONArray args) {
 
     }
 
-    private void calculateDistance(CallbackContext callbackContext, JSONArray array) {
+    private void calculateDistance(CallbackContext callbackContext, JSONArray args) {
 
     }
 }

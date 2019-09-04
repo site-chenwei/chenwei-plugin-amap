@@ -3,6 +3,8 @@ package com.chenwei.cordova.plugin;
 import android.app.Activity;
 import android.content.Context;
 
+import com.amap.api.fence.GeoFence;
+import com.amap.api.fence.GeoFenceClient;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 
@@ -49,6 +51,21 @@ public class AMapPlugin extends CordovaPlugin {
             result.setKeepCallback(true);
             callbackContext.sendPluginResult(result);
             getWeatherInfo(callbackContext, args);
+        } else if (MethodNames.GEO_FENCE_IN.equalsIgnoreCase(action)) {
+            PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
+            result.setKeepCallback(true);
+            callbackContext.sendPluginResult(result);
+            geoFenceIn(callbackContext, args);
+        } else if (MethodNames.GEO_FENCE_OUT.equalsIgnoreCase(action)) {
+            PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
+            result.setKeepCallback(true);
+            callbackContext.sendPluginResult(result);
+            geoFenceOut(callbackContext, args);
+        } else if (MethodNames.GEO_FENCE_STAYED.equalsIgnoreCase(action)) {
+            PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
+            result.setKeepCallback(true);
+            callbackContext.sendPluginResult(result);
+            geoFenceStayed(callbackContext, args);
         } else {
             LOG.i(TAG, "The Action" + action + "Not Exist");
             PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, "方法调用失败，不存在该方法");
@@ -62,6 +79,9 @@ public class AMapPlugin extends CordovaPlugin {
         String GET_LOCATION = "getLocation";
         String GET_WEATHER_INFO = "getWeatherInfo";
         String CALCULATE_DISTANCE = "calculateDistance";
+        String GEO_FENCE_IN = "geoFenceIn";
+        String GEO_FENCE_OUT = "geoFenceOut";
+        String GEO_FENCE_STAYED = "geoFenceStayed";
     }
 
     private void getLocation(CallbackContext callbackContext, JSONArray args) {
@@ -78,6 +98,25 @@ public class AMapPlugin extends CordovaPlugin {
     }
 
     private void calculateDistance(CallbackContext callbackContext, JSONArray args) {
+
+    }
+
+    private void geoFenceIn(CallbackContext callbackContext, JSONArray args) {
+        GeoFenceClient geoFenceClient = new GeoFenceClient(context);
+        geoFenceClient.setActivateAction(GeoFenceClient.GEOFENCE_IN);
+    }
+
+    private void geoFenceOut(CallbackContext callbackContext, JSONArray args) {
+        GeoFenceClient geoFenceClient = new GeoFenceClient(context);
+        geoFenceClient.setActivateAction(GeoFenceClient.GEOFENCE_OUT);
+    }
+
+    private void geoFenceStayed(CallbackContext callbackContext, JSONArray args) {
+        GeoFenceClient geoFenceClient = new GeoFenceClient(context);
+        geoFenceClient.setActivateAction(GeoFenceClient.GEOFENCE_STAYED);
+    }
+
+    private void createGeoFence(CallbackContext callbackContext, JSONArray args, GeoFenceClient geoFenceClient) {
 
     }
 }

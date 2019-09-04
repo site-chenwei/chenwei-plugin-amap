@@ -9,6 +9,15 @@ var AMapPlugin = {
     },
     calculateDistance: (params, success, fail) => {
         exec(success, fail, 'AMapPlugin', 'calculateDistance', [params]);
+    },
+    geoFenceIn: (params, success, fail) => {
+        exec(success, fail, 'AMapPlugin', 'geoFenceIn', [params]);
+    },
+    geoFenceOut: (params, success, fail) => {
+        exec(success, fail, 'AMapPlugin', 'geoFenceOut', [params]);
+    },
+    geoFenceStayed: (params, success, fail) => {
+        exec(success, fail, 'AMapPlugin', 'geoFenceStayed', [params]);
     }
 };
 module.exports = AMapPlugin;

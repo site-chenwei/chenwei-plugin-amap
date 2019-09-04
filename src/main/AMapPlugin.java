@@ -3,6 +3,9 @@ package com.chenwei.cordova.plugin;
 import android.app.Activity;
 import android.content.Context;
 
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
@@ -62,7 +65,14 @@ public class AMapPlugin extends CordovaPlugin {
     }
 
     private void getLocation(CallbackContext callbackContext, JSONArray array) {
-
+        AMapLocationClient aMapLocationClient = new AMapLocationClient(context);
+        AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
+        mLocationOption.setNeedAddress(true);
+        aMapLocationClient.setLocationListener(new AMapLocationListener(callbackContext));
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        mLocationOption.setInterval(2000);
+        aMapLocationClient.setLocationOption(mLocationOption);
+        aMapLocationClient.startLocation();
     }
 
     private void getWeatherInfo(CallbackContext callbackContext, JSONArray array) {

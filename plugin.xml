@@ -19,6 +19,7 @@
             </feature>
         </config-file>
         <source-file src="src/main/AMapPlugin.java" target-dir="src/com/chenwei/cordova/plugin"/>
+        <source-file src="src/main/AMapLocationListener.java" target-dir="src/com/chenwei/cordova/plugin"/>
         <lib-file src="src/resources/android/AMap.jar"/>
         <resource-file src="src/resources/android/arm64-v8a/libAMapSDK_MAP_v6_9_4.so"
                        target="jniLibs/arm64-v8a/libAMapSDK_MAP_v6_9_4.so"/>

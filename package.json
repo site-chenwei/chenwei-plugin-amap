@@ -1,0 +1,21 @@
+{
+  "name": "i2f-cordova-amaplocation",
+  "version": "1.0.0",
+  "description": "i2f amaplocation",
+  "cordova": {
+    "id": "i2f-cordova-amaplocation",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "keywords": [
+    "cordova",
+    "location",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "author": "i2f",
+  "license": ""
+}

@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-        id="i2f-cordova-amaplocation"
+        id="cordova-plugin-amap"
         version="0.0.1">
     <name>AMapPlugin</name>
     <description>高德地图插件</description>
-    <author email="1458010118@qq.com" href="http://www.chenwei.site">ChenWei</author>
+    <author email="1458010118@qq.com" href="http://www.chenwei.site">陈炜</author>
     <license>Apache 2.0</license>
     <keywords>cordova,AMap,location</keywords>
     <preference name="ANDROID_KEY"/>
     <preference name="IOS_KEY"/>
-    <js-module src="www/AMapPlugin.js" name="AMapPlugin">
+    <js-module src="src/main/AMapPlugin.js" name="AMapPlugin">
         <clobbers target="AMapPlugin"/>
     </js-module>
     <platform name="android">
-
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="AMapPlugin">
+                <param name="android-package" value="com.chenwei.cordova.plugin.AMapPlugin"/>
+            </feature>
+        </config-file>
+        <source-file src="src/main/AMapPlugin.java" target-dir="src/com/chenwei/cordova/plugin"/>
         <lib-file src="src/resources/android/AMap.jar"/>
         <resource-file src="src/resources/android/arm64-v8a/libAMapSDK_MAP_v6_9_4.so"
                        target="jniLibs/arm64-v8a/libAMapSDK_MAP_v6_9_4.so"/>

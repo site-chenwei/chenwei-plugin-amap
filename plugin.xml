@@ -14,6 +14,49 @@
     </js-module>
     <platform name="android">
 
+        <lib-file src="src/resources/android/AMap.jar"/>
+        <resource-file src="src/resources/android/arm64-v8a/libAMapSDK_MAP_v6_9_4.so"
+                       target="jniLibs/arm64-v8a/libAMapSDK_MAP_v6_9_4.so"/>
+        <resource-file src="src/resources/android/arm64-v8a/libAMapSDK_NAVI_v6_9_1.so"
+                       target="jniLibs/arm64-v8a/libAMapSDK_NAVI_v6_9_1.so"/>
+        <resource-file src="src/resources/android/arm64-v8a/libmp3decoder.so"
+                       target="jniLibs/arm64-v8a/libmp3decoder.so"/>
+        <resource-file src="src/resources/android/arm64-v8a/librtbt828.so" target="jniLibs/arm64-v8a/librtbt828.so"/>
+        <resource-file src="src/resources/android/arm64-v8a/libwtbt828.so" target="jniLibs/arm64-v8a/libwtbt828.so"/>
+        <resource-file src="src/resources/android/armeabi/libAMapSDK_MAP_v6_9_4.so"
+                       target="jniLibs/armeabi/libAMapSDK_MAP_v6_9_4.so"/>
+        <resource-file src="src/resources/android/armeabi/libAMapSDK_NAVI_v6_9_1.so"
+                       target="jniLibs/armeabi/libAMapSDK_NAVI_v6_9_1.so"/>
+        <resource-file src="src/resources/android/armeabi/libmp3decoder.so"
+                       target="jniLibs/armeabi/libmp3decoder.so"/>
+        <resource-file src="src/resources/android/armeabi/librtbt828.so" target="jniLibs/armeabi/librtbt828.so"/>
+        <resource-file src="src/resources/android/armeabi/libwtbt828.so" target="jniLibs/armeabi/libwtbt828.so"/>
+        <resource-file src="src/resources/android/armeabi-v7a/libAMapSDK_MAP_v6_9_4.so"
+                       target="jniLibs/armeabi-v7a/libAMapSDK_MAP_v6_9_4.so"/>
+        <resource-file src="src/resources/android/armeabi-v7a/libAMapSDK_NAVI_v6_9_1.so"
+                       target="jniLibs/armeabi-v7a/libAMapSDK_NAVI_v6_9_1.so"/>
+        <resource-file src="src/resources/android/armeabi-v7a/libmp3decoder.so"
+                       target="jniLibs/armeabi-v7a/libmp3decoder.so"/>
+        <resource-file src="src/resources/android/armeabi-v7a/librtbt828.so"
+                       target="jniLibs/armeabi-v7a/librtbt828.so"/>
+        <resource-file src="src/resources/android/armeabi-v7a/libwtbt828.so"
+                       target="jniLibs/armeabi-v7a/libwtbt828.so"/>
+        <resource-file src="src/resources/android/x86/libAMapSDK_MAP_v6_9_4.so"
+                       target="jniLibs/x86/libAMapSDK_MAP_v6_9_4.so"/>
+        <resource-file src="src/resources/android/x86/libAMapSDK_NAVI_v6_9_1.so"
+                       target="jniLibs/x86/libAMapSDK_NAVI_v6_9_1.so"/>
+        <resource-file src="src/resources/android/x86/libmp3decoder.so"
+                       target="jniLibs/x86/libmp3decoder.so"/>
+        <resource-file src="src/resources/android/x86/librtbt828.so" target="jniLibs/x86/librtbt828.so"/>
+        <resource-file src="src/resources/android/x86/libwtbt828.so" target="jniLibs/x86/libwtbt828.so"/>
+        <resource-file src="src/resources/android/x86_64/libAMapSDK_MAP_v6_9_4.so"
+                       target="jniLibs/x86_64/libAMapSDK_MAP_v6_9_4.so"/>
+        <resource-file src="src/resources/android/x86_64/libAMapSDK_NAVI_v6_9_1.so"
+                       target="jniLibs/x86_64/libAMapSDK_NAVI_v6_9_1.so"/>
+        <resource-file src="src/resources/android/x86_64/libmp3decoder.so"
+                       target="jniLibs/x86_64/libmp3decoder.so"/>
+        <resource-file src="src/resources/android/x86_64/librtbt828.so" target="jniLibs/x86_64/librtbt828.so"/>
+        <resource-file src="src/resources/android/x86_64/libwtbt828.so" target="jniLibs/x86_64/libwtbt828.so"/>
     </platform>
     <platform name="ios">
 

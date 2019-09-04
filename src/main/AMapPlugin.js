@@ -7,5 +7,5 @@ var AMapPlugin = {
     },
     calculateDistance: () => {
     }
-}
+};
 module.exports = AMapPlugin;

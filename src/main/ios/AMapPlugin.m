@@ -1,4 +1,10 @@
-#import AMapPlugin.h
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import <Cordova/CDV.h>
+#import <AMapFoundationKit/AMapFoundationKit.h>
+#import <AMapLocationKit/AMapLocationKit.h>
+#import <AMapSearchKit/AMapSearchKit.h>
+#import <MAMapKit/MAGeometry.h>
 #define DefaultLocationTimeout 3
 #define DefaultReGeocodeTimeout 3
 static NSString* const LATITUDE_KEY = @"latitude";
@@ -22,6 +28,13 @@ static NSString* const WIND_DIRECTION_KEY = @"windDirection";
 static NSString* const WIND_POWER_KEY = @"windPower";
 static NSString* const HUMIDITY_KEY = @"humidity";
 static NSString* const TYPE_KEY = @"type";
+
+
+@interface AMapPluginSearchAPI : CDVPlugin <AMapLocationManagerDelegate>{}
+@end
+@implementation AMapPluginSearchAPI
+
+@end
 /**
  *IOS版本的定位高德进行定位
  */
@@ -43,9 +56,7 @@ static NSString* const TYPE_KEY = @"type";
 @end
 
 @implementation AMapPlugin
-
 - (void)getWeatherInfo:(CDVInvokedUrlCommand*)command{
-    NSLog(@"调用天气");
     __weak AMapPlugin *weakSelf = self;
     self.callbackId = command.callbackId;
     [AMapServices sharedServices].apiKey = [self appKeyConfig];

@@ -3,3 +3,12 @@
 
 ## 安装
 `ionic cordova plugin add chenwei-plugin-amap --variable ANDROID_KEY='your android key' --variable IOS_KEY='your ios key'`
+## 使用
+    在app.module.ts引入AMapPlugin
+    
+    
+    import {AMapPlugin} from '@chenwei116057/amap';
+    ...
+    providers: [
+        AMapPlugin
+    ]

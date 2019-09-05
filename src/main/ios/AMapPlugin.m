@@ -1,36 +1,41 @@
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-#import <Cordova/CDV.h>
-#import <AMapFoundationKit/AMapFoundationKit.h>
-#import <AMapLocationKit/AMapLocationKit.h>
-#import <AMapSearchKit/AMapSearchKit.h>
-#import <MAMapKit/MAGeometry.h>
+#import AMapPlugin.h
 #define DefaultLocationTimeout 3
 #define DefaultReGeocodeTimeout 3
 static NSString* const LATITUDE_KEY = @"latitude";
 static NSString* const LONGITUDE_KEY = @"longitude";
 static NSString* const ADDRESS_KEY = @"address";
-static NSString* const DISTRICT_KEY = @"adCode";
-
-
-@interface AMapPluginSearchAPI : CDVPlugin <AMapSearchDelegate>{}
-- (void)getLocation:(CDVInvokedUrlCommand*)command;
-@end
-@implementation AMapPluginSearchAPI
-
-@end
+static NSString* const DISTRICT_KEY = @"district";
+static NSString* const ADCODE_KEY = @"adCode";
+static NSString* const ACCURACY_KEY = @"accuracy";
+static NSString* const CITY_KEY = @"city";
+static NSString* const CITY_CODE_KEY = @"cityCode";
+static NSString* const AOI_NAME_KEY = @"aoiName";
+static NSString* const COUNTRY_KEY = @"country";
+static NSString* const POI_NAME_KEY = @"poiName";
+static NSString* const PROVINCE_KEY = @"province";
+static NSString* const STREET_KEY = @"street";
+static NSString* const STREET_NUM_KEY = @"streetNum";
+static NSString* const LOCATION_TIME_KEY = @"locationTime";
+static NSString* const WEATHER_KEY = @"weather";
+static NSString* const TEMPERATURE_KEY = @"temperature";
+static NSString* const WIND_DIRECTION_KEY = @"windDirection";
+static NSString* const WIND_POWER_KEY = @"windPower";
+static NSString* const HUMIDITY_KEY = @"humidity";
+static NSString* const TYPE_KEY = @"type";
 /**
  *IOS版本的定位高德进行定位
  */
-@interface AMapPlugin : CDVPlugin <AMapLocationManagerDelegate>{
+@interface AMapPlugin : AMapPluginSearchAPI{
 
     //NSString* callbackId;
 }
+@property (nonatomic, strong) AMapSearchAPI *search;
 @property (nonatomic, strong) NSString *callbackId;
 @property (nonatomic, strong) NSString *appKeyConfig;
 @property (nonatomic, strong) AMapLocationManager *locationManager;
 @property (nonatomic, copy) AMapLocatingCompletionBlock completionBlock;
 @property (nonatomic, strong) NSString *appendAddress;
+
 
 - (void)getLocation:(CDVInvokedUrlCommand*)command;
 - (void)calculateDistance:(CDVInvokedUrlCommand*)command;
@@ -39,6 +44,45 @@ static NSString* const DISTRICT_KEY = @"adCode";
 
 @implementation AMapPlugin
 
+- (void)getWeatherInfo:(CDVInvokedUrlCommand*)command{
+    NSLog(@"调用天气");
+    __weak AMapPlugin *weakSelf = self;
+    self.callbackId = command.callbackId;
+    [AMapServices sharedServices].apiKey = [self appKeyConfig];
+    self.search = [[AMapSearchAPI alloc] init];
+    AMapWeatherSearchRequest *request = [[AMapWeatherSearchRequest alloc] init];
+    NSString *myarg1 = [command.arguments objectAtIndex:0];
+    request.city = myarg1;
+    request.type = AMapWeatherTypeLive;
+    [self.search AMapWeatherSearch:request];
+}
+- (void)onWeatherSearchDone:(AMapWeatherSearchRequest *)request response:(AMapWeatherSearchResponse *)response
+{
+__weak AMapPlugin *weakSelf = self;
+        if (response.lives.count == 0)
+        {
+            CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"获取天气失败"];
+            [weakSelf.commandDelegate sendPluginResult:pluginResult callbackId:weakSelf.callbackId];
+        }
+        AMapLocalWeatherLive *liveWeather = [response.lives firstObject];
+       CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
+                       liveWeather.weather,WEATHER_KEY,
+                       liveWeather.temperature,TEMPERATURE_KEY,
+                       liveWeather.city,CITY_KEY,
+                       liveWeather.province,PROVINCE_KEY,
+                       liveWeather.windDirection,WIND_DIRECTION_KEY,
+                       liveWeather.windPower,WIND_POWER_KEY,
+                       liveWeather.humidity,HUMIDITY_KEY,
+                       nil]];
+        [weakSelf.commandDelegate sendPluginResult:pluginResult callbackId:weakSelf.callbackId];
+
+}
+- (void)AMapSearchRequest:(id)request didFailWithError:(NSError *)error
+{
+__weak AMapPlugin *weakSelf = self;
+   CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"获取天气失败"];
+   [weakSelf.commandDelegate sendPluginResult:pluginResult callbackId:weakSelf.callbackId];
+}
 - (NSString *)appKeyConfig {
   if(!_appKeyConfig){
       NSString *path = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
@@ -59,13 +103,8 @@ static NSString* const DISTRICT_KEY = @"adCode";
   CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDouble:distance];
   [weakSelf.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
-- (void)getWeatherInfo:(CDVInvokedUrlCommand*)command{
-__weak AMapPlugin *weakSelf = self;
-}
-
 - (void)getLocation:(CDVInvokedUrlCommand*)command{
     self.callbackId = command.callbackId;
-
     [AMapServices sharedServices].apiKey = [self appKeyConfig];
     [self initCompleteBlock];
 
@@ -149,7 +188,21 @@ __weak AMapPlugin *weakSelf = self;
             }
             if(weakSelf.callbackId != nil){
 
-                CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:[NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithDouble: location.coordinate.longitude], LONGITUDE_KEY, [NSNumber numberWithDouble: location.coordinate.latitude], LATITUDE_KEY,regeocode.adcode,DISTRICT_KEY, weakSelf.appendAddress, ADDRESS_KEY, nil]];
+                CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
+                [NSNumber numberWithDouble: location.coordinate.longitude], LONGITUDE_KEY,
+                [NSNumber numberWithDouble: location.coordinate.latitude], LATITUDE_KEY,
+                regeocode.number, STREET_NUM_KEY,
+                regeocode.country, COUNTRY_KEY,
+                regeocode.district,DISTRICT_KEY,
+                regeocode.adcode,ADCODE_KEY,
+                regeocode.province,PROVINCE_KEY,
+                regeocode.street,STREET_KEY,
+                regeocode.POIName,POI_NAME_KEY,
+                regeocode.AOIName,AOI_NAME_KEY,
+                regeocode.city,CITY_KEY,
+                regeocode.citycode,CITY_CODE_KEY,
+                weakSelf.appendAddress, ADDRESS_KEY,
+                nil]];
                 [weakSelf.commandDelegate sendPluginResult:pluginResult callbackId:weakSelf.callbackId];
                 weakSelf.callbackId = nil;
             }

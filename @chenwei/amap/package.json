@@ -1,0 +1,16 @@
+{
+  "_spec": "1.0.0",
+  "author": {
+    "name": "陈炜"
+  },
+  "license": "MIT",
+  "module": "index.js",
+  "name": "@chenwei/amap",
+  "peerDependencies": {
+    "@ionic-native/core": "^5.1.0",
+    "@angular/core": "*",
+    "rxjs": "^6.3.0"
+  },
+  "typings": "index.d.ts",
+  "version": "1.0.0"
+}

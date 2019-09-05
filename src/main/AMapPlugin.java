@@ -1,4 +1,4 @@
-package com.chenwei116057.cordova.plugin;
+package com.chenwei116057.plugin;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -28,7 +28,7 @@ import java.util.concurrent.ExecutorService;
 
 public class AMapPlugin extends CordovaPlugin {
     private static final String TAG = "AMapPlugin";
-    private static final String GEO_FENCE_BROADCAST_ACTION = "com.chenwei116057.cordova.plugin.broadcast";
+    private static final String GEO_FENCE_BROADCAST_ACTION = "com.chenwei116057.plugin.broadcast";
     private static GeoFenceClient geoFenceInClient;
     private static GeoFenceClient geoFenceOutClient;
     private static GeoFenceClient geoFenceStayedClient;

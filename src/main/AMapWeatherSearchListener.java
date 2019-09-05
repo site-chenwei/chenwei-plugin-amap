@@ -1,4 +1,4 @@
-package com.chenwei116057.cordova.plugin;
+package com.chenwei116057.plugin;
 
 import com.amap.api.services.weather.LocalWeatherForecastResult;
 import com.amap.api.services.weather.LocalWeatherLive;

@@ -1,9 +1,9 @@
 {
-  "name": "cordova-plugin-amap-location",
+  "name": "chenwei-plugin-amap",
   "version": "1.0.0",
   "description": "高德地图插件",
   "cordova": {
-    "id": "cordova-plugin-amap-location",
+    "id": "chenwei-plugin-amap",
     "platforms": [
       "android",
       "ios"

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../cordova-plugin-amap-location/.idea/cordova-plugin-amap-location.iml" filepath="$PROJECT_DIR$/../cordova-plugin-amap-location/.idea/cordova-plugin-amap-location.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../chenwei-plugin-amap/.idea/chenwei-plugin-amap.iml" filepath="$PROJECT_DIR$/../chenwei-plugin-amap/.idea/chenwei-plugin-amap.iml" />
     </modules>
   </component>
 </project>

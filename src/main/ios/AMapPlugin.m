@@ -4,6 +4,7 @@
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import <AMapLocationKit/AMapLocationKit.h>
 #import <AMapSearchKit/AMapSearchKit.h>
+#import <MAMapKit/MAGeometry.h>
 #define DefaultLocationTimeout 3
 #define DefaultReGeocodeTimeout 3
 static NSString* const LATITUDE_KEY = @"latitude";

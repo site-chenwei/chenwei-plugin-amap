@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="chenwei-plugin-amap"
-        version="1.0.7">
+        version="1.0.8">
     <name>AMapPlugin</name>
     <description>高德地图插件</description>
     <author email="1458010118@qq.com" href="http://www.chenwei.site">陈炜</author>
@@ -83,6 +83,7 @@
         <framework src="src/resources/ios/AMapFoundationKit.framework" custom="true"/>
         <framework src="src/resources/ios/AMapLocationKit.framework" custom="true"/>
         <framework src="src/resources/ios/AMapSearchKit.framework" custom="true"/>
+        <framework src="src/resources/ios/MAMapKit.framework" custom="true"/>
         <framework src="ExternalAccessory.framework"/>
         <framework src="CoreTelephony.framework"/>
         <framework src="GLKit.framework"/>

@@ -1,6 +1,6 @@
 {
   "name": "chenwei-plugin-amap",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "高德地图插件",
   "cordova": {
     "id": "chenwei-plugin-amap",

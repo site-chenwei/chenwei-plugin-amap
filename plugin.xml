@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="chenwei-plugin-amap"
-        version="1.0.3">
+        version="1.0.4">
     <name>AMapPlugin</name>
     <description>高德地图插件</description>
     <author email="1458010118@qq.com" href="http://www.chenwei.site">陈炜</author>
@@ -10,7 +10,7 @@
     <keywords>cordova,AMap,location</keywords>
     <preference name="ANDROID_KEY"/>
     <preference name="IOS_KEY"/>
-    <js-module src="src/main/AMapPlugin.js" name="AMapPlugin">
+    <js-module src="www/AMapPlugin.js" name="AMapPlugin">
         <clobbers target="AMapPlugin"/>
     </js-module>
     <platform name="android">
@@ -57,12 +57,37 @@
             <!-- 定位需要的服务 -->
             <service android:name="com.amap.api.location.APSService"></service>
         </config-file>
-        <source-file src="src/main/AMapPlugin.java" target-dir="src/com/chenwei116057/plugin"/>
-        <source-file src="src/main/AMapLocationListener.java" target-dir="src/com/chenwei116057/plugin"/>
-        <source-file src="src/main/AMapWeatherSearchListener.java" target-dir="src/com/chenwei116057/plugin"/>
+        <source-file src="src/main/android/AMapPlugin.java" target-dir="src/com/chenwei116057/plugin"/>
+        <source-file src="src/main/android/AMapLocationListener.java" target-dir="src/com/chenwei116057/plugin"/>
+        <source-file src="src/main/android/AMapWeatherSearchListener.java" target-dir="src/com/chenwei116057/plugin"/>
         <lib-file src="src/resources/android/AMap.jar"/>
     </platform>
     <platform name="ios">
-
+        <config-file parent="/*" target="config.xml">
+            <feature name="AMapPlugin">
+                <param name="ios-package" value="AMapPlugin"/>
+            </feature>
+        </config-file>
+        <config-file target="*/*-Info.plist" parent="UIBackgroundModes">
+            <array>
+                <string>location</string>
+            </array>
+        </config-file>
+        <config-file target="*/*-Info.plist" parent="NSLocationAlwaysUsageDescription">
+            <string>为了确保您可以正确使用本应用，请选择允许</string>
+        </config-file>
+        <!--您申请的高德地图ios key更多详情请看http://www.jianshu.com/p/85aceaee3b35-->
+        <config-file target="*/*-Info.plist" parent="GaoDeAppKey">
+            <string>$IOS_KEY</string>
+        </config-file>
+        <framework src="src/main/ios/AMapFoundationKit.framework" custom="true"/>
+        <framework src="src/main/ios/AMapLocationKit.framework" custom="true"/>
+        <framework src="src/main/ios/AMapSearchKit.framework" custom="true"/>
+        <framework src="ExternalAccessory.framework"/>
+        <framework src="CoreTelephony.framework"/>
+        <framework src="GLKit.framework"/>
+        <framework src="libz.tbd"/>
+        <framework src="libc++.tbd"/>
+        <source-file src="src/main/ios/AMapPlugin.m"/>
     </platform>
 </plugin>

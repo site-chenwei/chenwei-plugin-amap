@@ -1,4 +1,4 @@
-package com.chenwei.cordova.plugin;
+package com.chenwei116057.cordova.plugin;
 
 import com.amap.api.fence.GeoFence;
 import com.amap.api.fence.GeoFenceListener;

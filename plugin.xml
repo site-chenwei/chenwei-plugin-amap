@@ -16,7 +16,7 @@
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="AMapPlugin">
-                <param name="android-package" value="com.chenwei.cordova.plugin.AMapPlugin"/>
+                <param name="android-package" value="com.chenwei116057.cordova.plugin.AMapPlugin"/>
             </feature>
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/manifest">
@@ -57,11 +57,11 @@
             <!-- 定位需要的服务 -->
             <service android:name="com.amap.api.location.APSService"></service>
         </config-file>
-        <source-file src="src/main/AMapPlugin.java" target-dir="src/com/chenwei/cordova/plugin"/>
-        <source-file src="src/main/AMapLocationListener.java" target-dir="src/com/chenwei/cordova/plugin"/>
-        <source-file src="src/main/AMapGenFenceListener.java" target-dir="src/com/chenwei/cordova/plugin"/>
-        <source-file src="src/main/AMapGeoFenceReceiver.java" target-dir="src/com/chenwei/cordova/plugin"/>
-        <source-file src="src/main/AMapWeatherSearchListener.java" target-dir="src/com/chenwei/cordova/plugin"/>
+        <source-file src="src/main/AMapPlugin.java" target-dir="src/com/chenwei116057/cordova/plugin"/>
+        <source-file src="src/main/AMapLocationListener.java" target-dir="src/com/chenwei116057/cordova/plugin"/>
+        <source-file src="src/main/AMapGenFenceListener.java" target-dir="src/com/chenwei116057/cordova/plugin"/>
+        <source-file src="src/main/AMapGeoFenceReceiver.java" target-dir="src/com/chenwei116057/cordova/plugin"/>
+        <source-file src="src/main/AMapWeatherSearchListener.java" target-dir="src/com/chenwei116057/cordova/plugin"/>
         <lib-file src="src/resources/android/AMap.jar"/>
     </platform>
     <platform name="ios">

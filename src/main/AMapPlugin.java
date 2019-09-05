@@ -10,7 +10,10 @@ import com.amap.api.fence.GeoFence;
 import com.amap.api.fence.GeoFenceClient;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.CoordinateConverter;
 import com.amap.api.location.DPoint;
+import com.amap.api.services.weather.WeatherSearch;
+import com.amap.api.services.weather.WeatherSearchQuery;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
@@ -110,11 +113,30 @@ public class AMapPlugin extends CordovaPlugin {
     }
 
     private void getWeatherInfo(CallbackContext callbackContext, JSONArray args) {
-
+        try {
+            WeatherSearchQuery weatherSearchQuery = new WeatherSearchQuery(args.getString(0), WeatherSearchQuery.WEATHER_TYPE_LIVE);
+            WeatherSearch weatherSearch = new WeatherSearch(context);
+            weatherSearch.setOnWeatherSearchListener(new AMapWeatherSearchListener(callbackContext));
+            weatherSearch.setQuery(weatherSearchQuery);
+            weatherSearch.searchWeatherAsyn();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void calculateDistance(CallbackContext callbackContext, JSONArray args) {
-
+        DPoint startPoint = new DPoint();
+        try {
+            startPoint.setLatitude(args.getLong(0));
+            startPoint.setLongitude(args.getLong(1));
+            DPoint endPoint = new DPoint();
+            endPoint.setLatitude(args.getLong(2));
+            endPoint.setLongitude(args.getLong(3));
+            float v = CoordinateConverter.calculateLineDistance(startPoint, endPoint);
+            callbackContext.success(String.valueOf(v));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void geoFenceIn(CallbackContext callbackContext, JSONArray args) {

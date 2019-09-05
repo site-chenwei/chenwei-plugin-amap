@@ -8,7 +8,7 @@ var AMapPlugin = {
         exec(success, fail, 'AMapPlugin', 'getWeatherInfo', [params]);
     },
     calculateDistance: (params, success, fail) => {
-        exec(success, fail, 'AMapPlugin', 'calculateDistance', [params]);
+        exec(success, fail, 'AMapPlugin', 'calculateDistance', [params.startLatitude,params.startLongitude,params.endLatitude,params.endLongitude]);
     },
     geoFenceIn: (params, success, fail) => {
         exec(success, fail, 'AMapPlugin', 'geoFenceIn', [params]);

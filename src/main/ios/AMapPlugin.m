@@ -11,6 +11,13 @@ static NSString* const LONGITUDE_KEY = @"longitude";
 static NSString* const ADDRESS_KEY = @"address";
 static NSString* const DISTRICT_KEY = @"adCode";
 
+
+@interface AMapPluginSearchAPI : CDVPlugin <AMapSearchDelegate>{}
+- (void)getLocation:(CDVInvokedUrlCommand*)command;
+@end
+@implementation AMapPluginSearchAPI
+
+@end
 /**
  *IOS版本的定位高德进行定位
  */
@@ -52,7 +59,7 @@ static NSString* const DISTRICT_KEY = @"adCode";
   [weakSelf.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 - (void)getWeatherInfo:(CDVInvokedUrlCommand*)command{
-
+__weak AMapPlugin *weakSelf = self;
 }
 
 - (void)getLocation:(CDVInvokedUrlCommand*)command{

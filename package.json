@@ -1,10 +1,10 @@
 {
   "name": "chenwei-plugin-amap",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "高德地图插件",
   "homepage": "https://github.com/chenwei116057/chenwei-plugin-amap",
   "licenses": [
-    "MIT"
+    {"license": "MIT"}
   ],
   "cordova": {
     "id": "chenwei-plugin-amap",

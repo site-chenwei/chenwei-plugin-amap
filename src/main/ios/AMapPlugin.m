@@ -1,10 +1,4 @@
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-#import <Cordova/CDV.h>
-#import <AMapFoundationKit/AMapFoundationKit.h>
-#import <AMapLocationKit/AMapLocationKit.h>
-#import <AMapSearchKit/AMapSearchKit.h>
-#import <MAMapKit/MAGeometry.h>
+#import "AMapPlugin.h"
 #define DefaultLocationTimeout 3
 #define DefaultReGeocodeTimeout 3
 static NSString* const LATITUDE_KEY = @"latitude";
@@ -28,23 +22,11 @@ static NSString* const WIND_DIRECTION_KEY = @"windDirection";
 static NSString* const WIND_POWER_KEY = @"windPower";
 static NSString* const HUMIDITY_KEY = @"humidity";
 static NSString* const TYPE_KEY = @"type";
-
-
-@interface AMapPluginSearchAPI : CDVPlugin <AMapLocationManagerDelegate>{}
-@end
-@implementation AMapPluginSearchAPI
-
-@end
-/**
- *IOS版本的定位高德进行定位
- */
-@interface AMapPlugin : AMapPluginSearchAPI{
-
-    //NSString* callbackId;
-}
-@property (nonatomic, strong) AMapSearchAPI *search;
+@interface AMapPlugin() <AMapSearchDelegate>
 @property (nonatomic, strong) NSString *callbackId;
 @property (nonatomic, strong) NSString *appKeyConfig;
+@property (nonatomic, strong) AMapSearchAPI *search;
+@property (nullable, copy) NSArray<NSExpression *> *arguments;
 @property (nonatomic, strong) AMapLocationManager *locationManager;
 @property (nonatomic, copy) AMapLocatingCompletionBlock completionBlock;
 @property (nonatomic, strong) NSString *appendAddress;
@@ -54,13 +36,19 @@ static NSString* const TYPE_KEY = @"type";
 - (void)calculateDistance:(CDVInvokedUrlCommand*)command;
 - (void)getWeatherInfo:(CDVInvokedUrlCommand*)command;
 @end
-
 @implementation AMapPlugin
+- (NSString *)appKeyConfig {
+  if(!_appKeyConfig){
+      NSString *path = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
+      NSDictionary *dic = [[NSDictionary alloc] initWithContentsOfFile:path];
+      _appKeyConfig = [dic valueForKey:@"GaoDeAppKey"];
+   }
+    return _appKeyConfig;
+}
 - (void)getWeatherInfo:(CDVInvokedUrlCommand*)command{
-    __weak AMapPlugin *weakSelf = self;
-    self.callbackId = command.callbackId;
-    [AMapServices sharedServices].apiKey = [self appKeyConfig];
     self.search = [[AMapSearchAPI alloc] init];
+    self.callbackId=command.callbackId;
+    self.search.delegate = self;
     AMapWeatherSearchRequest *request = [[AMapWeatherSearchRequest alloc] init];
     NSString *myarg1 = [command.arguments objectAtIndex:0];
     request.city = myarg1;
@@ -69,38 +57,27 @@ static NSString* const TYPE_KEY = @"type";
 }
 - (void)onWeatherSearchDone:(AMapWeatherSearchRequest *)request response:(AMapWeatherSearchResponse *)response
 {
-__weak AMapPlugin *weakSelf = self;
-        if (response.lives.count == 0)
-        {
-            CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"获取天气失败"];
-            [weakSelf.commandDelegate sendPluginResult:pluginResult callbackId:weakSelf.callbackId];
-        }
-        AMapLocalWeatherLive *liveWeather = [response.lives firstObject];
-       CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
-                       liveWeather.weather,WEATHER_KEY,
-                       liveWeather.temperature,TEMPERATURE_KEY,
-                       liveWeather.city,CITY_KEY,
-                       liveWeather.province,PROVINCE_KEY,
-                       liveWeather.windDirection,WIND_DIRECTION_KEY,
-                       liveWeather.windPower,WIND_POWER_KEY,
-                       liveWeather.humidity,HUMIDITY_KEY,
-                       nil]];
-        [weakSelf.commandDelegate sendPluginResult:pluginResult callbackId:weakSelf.callbackId];
-
+    if (response.lives.count == 0)
+     {
+         CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"获取天气失败"];
+         [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackId];
+     }
+     AMapLocalWeatherLive *liveWeather = [response.lives firstObject];
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
+                    liveWeather.weather,WEATHER_KEY,
+                    liveWeather.temperature,TEMPERATURE_KEY,
+                    liveWeather.city,CITY_KEY,
+                    liveWeather.province,PROVINCE_KEY,
+                    liveWeather.windDirection,WIND_DIRECTION_KEY,
+                    liveWeather.windPower,WIND_POWER_KEY,
+                    liveWeather.humidity,HUMIDITY_KEY,
+                    nil]];
+     [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackId];
 }
 - (void)AMapSearchRequest:(id)request didFailWithError:(NSError *)error
 {
-__weak AMapPlugin *weakSelf = self;
    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"获取天气失败"];
-   [weakSelf.commandDelegate sendPluginResult:pluginResult callbackId:weakSelf.callbackId];
-}
-- (NSString *)appKeyConfig {
-  if(!_appKeyConfig){
-      NSString *path = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
-      NSDictionary *dic = [[NSDictionary alloc] initWithContentsOfFile:path];
-      _appKeyConfig = [dic valueForKey:@"GaoDeAppKey"];
-   }
-    return _appKeyConfig;
+   [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackId];
 }
 - (void)calculateDistance:(CDVInvokedUrlCommand*)command{
   __weak AMapPlugin *weakSelf = self;

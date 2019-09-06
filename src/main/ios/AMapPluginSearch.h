@@ -5,6 +5,12 @@
 #import <AMapLocationKit/AMapLocationKit.h>
 #import <AMapSearchKit/AMapSearchKit.h>
 #import <MAMapKit/MAGeometry.h>
+#import "AMapPlugin.h"
+@interface AMapPluginSearchAPI : CDVPlugin <AMapSearchDelegate>{}
+@property (nonatomic, strong) NSString *appKeyConfig;
+@property (nonatomic, strong) AMapSearchAPI *search;
+@property (nonatomic, strong) AMapPlugin *plugin;
 
-@interface AMapPluginSearchAPI : CDVPlugin <AMapLocationManagerDelegate>{}
+- (void)getWeatherInfo:(AMapPlugin*)plugin;
+
 @end

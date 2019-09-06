@@ -23,7 +23,7 @@ public class AMapLocationListener implements com.amap.api.location.AMapLocationL
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("accuracy", aMapLocation.getAccuracy());
-                jsonObject.put("addressCode", aMapLocation.getAdCode());
+                jsonObject.put("adCode", aMapLocation.getAdCode());
                 jsonObject.put("address", aMapLocation.getAddress());
                 jsonObject.put("city", aMapLocation.getCity());
                 jsonObject.put("cityCode", aMapLocation.getCityCode());

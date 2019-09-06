@@ -2,8 +2,9 @@
 使用高德Android定位SDK进行定位，以解决webapp中定位不准的问题
 
 ## 安装
-`ionic cordova plugin add chenwei-plugin-amap --variable ANDROID_KEY=your android key --variable IOS_KEY=your ios key
-npm i @chenwei116057/amap` `
+    ionic cordova plugin add chenwei-plugin-amap --variable ANDROID_KEY=your android key --variable IOS_KEY=your ios key
+
+    npm i @chenwei116057/amap
 ## 使用
     在app.module.ts引入AMapPlugin
     
@@ -15,9 +16,9 @@ npm i @chenwei116057/amap` `
     ]
 ## 方法介绍
 ### 获取当前位置信息(IOS/安卓)
-`getLocation(): Promise<LocationResult|void>;
-`
-`LocationResult {
+    getLocation(): Promise<LocationResult|void>;
+    
+    LocationResult {
     /**
      * 定位精度 仅android存在，IOS恒为undefined
      */
@@ -78,11 +79,11 @@ npm i @chenwei116057/amap` `
      * 定位时间 仅android存在，IOS恒为undefined
      */
     locationTime: Date
-}
+    }
 `
 ### 获取天气信息(IOS/安卓)
-`getWeatherInfo(params: { adCode: string }): Promise<WeatherInfo | void>;`
-`WeatherInfo {
+    getWeatherInfo(params: { adCode: string }): Promise<WeatherInfo | void>;
+    WeatherInfo {
     type: "live" | "forecast";
     /**
      * 天气
@@ -113,8 +114,8 @@ npm i @chenwei116057/amap` `
      * 湿度
      */
     humidity: string;
-}`
+    }
 ### 计算两个坐标间的距离(IOS/安卓)
-`calculateDistance(params: { startLatitude: number, startLongitude: number, endLatitude: number, endLongitude: number }): Promise<number | void>;`
+    calculateDistance(params: { startLatitude: number, startLongitude: number, endLatitude: number, endLongitude: number }): Promise<number | void>;
 
     

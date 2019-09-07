@@ -3,6 +3,7 @@ package com.chenwei116057.plugin;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 
@@ -32,6 +33,7 @@ public class AMapPlugin extends CordovaPlugin {
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        super.initialize(cordova, webView);
         activity = cordova.getActivity();
         context = cordova.getContext();
         threadPool = cordova.getThreadPool();
@@ -56,7 +58,12 @@ public class AMapPlugin extends CordovaPlugin {
             result.setKeepCallback(true);
             callbackContext.sendPluginResult(result);
             getWeatherInfo(callbackContext, args);
-        }  else {
+        } else if (MethodNames.SHOW_MAP.equalsIgnoreCase(action)) {
+            PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
+            result.setKeepCallback(true);
+            callbackContext.sendPluginResult(result);
+            showMap();
+        } else {
             LOG.i(TAG, "The Action" + action + "Not Exist");
             PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, "方法调用失败，不存在该方法");
             result.setKeepCallback(false);
@@ -65,10 +72,16 @@ public class AMapPlugin extends CordovaPlugin {
         return true;
     }
 
+
     private interface MethodNames {
         String GET_LOCATION = "getLocation";
         String GET_WEATHER_INFO = "getWeatherInfo";
         String CALCULATE_DISTANCE = "calculateDistance";
+        String SHOW_MAP = "showMap";
+    }
+
+    private void showMap() {
+        activity.startActivity(new Intent(activity, AMapPluginActivity.class));
     }
 
     private void getLocation(CallbackContext callbackContext, JSONArray args) {

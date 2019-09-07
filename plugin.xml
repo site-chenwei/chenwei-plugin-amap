@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="chenwei-plugin-amap"
-        version="1.0.15">
+        version="2.0.0">
     <name>AMapPlugin</name>
     <description>高德地图插件</description>
     <author email="1458010118@qq.com" href="http://www.chenwei.site">陈炜</author>
@@ -56,11 +56,19 @@
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <!-- 定位需要的服务 -->
             <service android:name="com.amap.api.location.APSService"></service>
+            <activity android:name="com.chenwei116057.plugin.AMapPluginActivity"></activity>
         </config-file>
+        <source-file src="src/resources/android/lay_out.xml" target-dir="res/layout" />
         <source-file src="src/main/android/AMapPlugin.java" target-dir="src/com/chenwei116057/plugin"/>
         <source-file src="src/main/android/AMapLocationListener.java" target-dir="src/com/chenwei116057/plugin"/>
         <source-file src="src/main/android/AMapWeatherSearchListener.java" target-dir="src/com/chenwei116057/plugin"/>
+        <source-file src="src/main/android/AMapPluginActivity.java" target-dir="src/com/chenwei116057/plugin"/>
         <lib-file src="src/resources/android/AMap.jar"/>
+        <resource-file src="src/resources/android/arm64-v8a/libAMapSDK_MAP_v6_9_4.so" target="jniLibs/arm64-v8a/libAMapSDK_MAP_v6_9_4.so"/>
+        <resource-file src="src/resources/android/armeabi/libAMapSDK_MAP_v6_9_4.so" target="jniLibs/armeabi/libAMapSDK_MAP_v6_9_4.so"/>
+        <resource-file src="src/resources/android/armeabi-v7a/libAMapSDK_MAP_v6_9_4.so" target="jniLibs/armeabi-v7a/libAMapSDK_MAP_v6_9_4.so"/>
+        <resource-file src="src/resources/android/x86/libAMapSDK_MAP_v6_9_4.so" target="jniLibs/x86/libAMapSDK_MAP_v6_9_4.so"/>
+        <resource-file src="src/resources/android/x86_64/libAMapSDK_MAP_v6_9_4.so" target="jniLibs/x86_64/libAMapSDK_MAP_v6_9_4.so"/>
     </platform>
     <platform name="ios">
         <config-file parent="/*" target="config.xml">

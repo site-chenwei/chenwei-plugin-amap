@@ -158,27 +158,15 @@ static NSString* const TYPE_KEY = @"type";
         else
         {
             //没有错误：location有返回值，regeocode是否有返回值取决于是否进行逆地理操作，进行annotation的添加
-            if (regeocode) {
-                NSString *formattedAddress = regeocode.formattedAddress;
-                NSString *country = regeocode.country;
-                NSString *province = regeocode.province;
-                NSString *city = regeocode.city;
-                NSString *district = regeocode.district;
-                NSString *citycode = regeocode.citycode;
-                NSString *adcode = regeocode.adcode;
-                NSString *street = regeocode.street;
-                NSString *number = regeocode.number;
-                NSString *POIName = regeocode.POIName;
-                NSString *AOIName = regeocode.AOIName;
-                weakSelf.appendAddress = [province isEqualToString:city] ?
-                [NSString stringWithFormat:@"%@%@%@%@%@", city, district, street, number, POIName] :
-                [NSString stringWithFormat:@"%@%@%@%@%@%@", province, city, district, street, number, POIName];
-            }
-            if(weakSelf.callbackId != nil){
-
+            if(weakSelf.callbackId != nil&& regeocode!=nil){
+                NSString *address = [regeocode.province isEqualToString:regeocode.city] ?
+                [NSString stringWithFormat:@"%@%@%@%@%@", regeocode.city, regeocode.district, regeocode.street, regeocode.number, regeocode.POIName] :
+                [NSString stringWithFormat:@"%@%@%@%@%@%@", regeocode.province, regeocode.city, regeocode.district, regeocode.street, regeocode.number, regeocode.POIName];
+                NSLog(@"地址信息：{%@}",address);
                 CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
                 [NSNumber numberWithDouble: location.coordinate.longitude], LONGITUDE_KEY,
                 [NSNumber numberWithDouble: location.coordinate.latitude], LATITUDE_KEY,
+                address, ADDRESS_KEY,
                 regeocode.number, STREET_NUM_KEY,
                 regeocode.country, COUNTRY_KEY,
                 regeocode.district,DISTRICT_KEY,
@@ -189,10 +177,14 @@ static NSString* const TYPE_KEY = @"type";
                 regeocode.AOIName,AOI_NAME_KEY,
                 regeocode.city,CITY_KEY,
                 regeocode.citycode,CITY_CODE_KEY,
-                weakSelf.appendAddress, ADDRESS_KEY,
                 nil]];
                 [weakSelf.commandDelegate sendPluginResult:pluginResult callbackId:weakSelf.callbackId];
                 weakSelf.callbackId = nil;
+            }else{
+            NSString *errorMsg = @"逆定理失败，无返回值";
+                        [weakSelf failWithCallbackID:weakSelf.callbackId withMessage:errorMsg];
+                        NSLog(@"逆定理失败，无返回值");
+                        return;
             }
             [weakSelf.locationManager stopUpdatingLocation];
         }

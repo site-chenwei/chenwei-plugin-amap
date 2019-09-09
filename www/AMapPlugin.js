@@ -11,7 +11,4 @@ AMapPlugin.prototype.getWeatherInfo = function (params, success, fail) {
 AMapPlugin.prototype.calculateDistance = function (params, success, fail) {
     cordova.exec(success, fail, 'AMapPlugin', 'calculateDistance', [params.startLatitude, params.startLongitude, params.endLatitude, params.endLongitude]);
 }
-AMapPlugin.prototype.showMap = function (params, success, fail) {
-    cordova.exec(success, fail, 'AMapPlugin', 'showMap', []);
-}
 module.exports = new AMapPlugin();

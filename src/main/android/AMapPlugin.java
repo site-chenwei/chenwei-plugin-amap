@@ -58,12 +58,7 @@ public class AMapPlugin extends CordovaPlugin {
             result.setKeepCallback(true);
             callbackContext.sendPluginResult(result);
             getWeatherInfo(callbackContext, args);
-        } else if (MethodNames.SHOW_MAP.equalsIgnoreCase(action)) {
-            PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
-            result.setKeepCallback(true);
-            callbackContext.sendPluginResult(result);
-            showMap();
-        } else {
+        }else {
             LOG.i(TAG, "The Action" + action + "Not Exist");
             PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, "方法调用失败，不存在该方法");
             result.setKeepCallback(false);
@@ -77,11 +72,6 @@ public class AMapPlugin extends CordovaPlugin {
         String GET_LOCATION = "getLocation";
         String GET_WEATHER_INFO = "getWeatherInfo";
         String CALCULATE_DISTANCE = "calculateDistance";
-        String SHOW_MAP = "showMap";
-    }
-
-    private void showMap() {
-        activity.startActivity(new Intent(activity, AMapPluginActivity.class));
     }
 
     private void getLocation(CallbackContext callbackContext, JSONArray args) {
@@ -106,13 +96,9 @@ public class AMapPlugin extends CordovaPlugin {
     }
 
     private void calculateDistance(CallbackContext callbackContext, JSONArray args) {
-        DPoint startPoint = new DPoint();
         try {
-            startPoint.setLatitude(args.getLong(0));
-            startPoint.setLongitude(args.getLong(1));
-            DPoint endPoint = new DPoint();
-            endPoint.setLatitude(args.getLong(2));
-            endPoint.setLongitude(args.getLong(3));
+            DPoint startPoint=new DPoint(args.getDouble(0),args.getDouble(1));
+            DPoint endPoint = new DPoint(args.getDouble(2),args.getDouble(3));
             float v = CoordinateConverter.calculateLineDistance(startPoint, endPoint);
             callbackContext.success(String.valueOf(v));
         } catch (JSONException e) {

@@ -1,25 +1,14 @@
 package com.chenwei116057.plugin;
 
 import android.app.Activity;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.CoordinateConverter;
 import com.amap.api.location.DPoint;
 import com.amap.api.services.weather.WeatherSearch;
 import com.amap.api.services.weather.WeatherSearchQuery;
-
-import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaInterface;
-import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.LOG;
-import org.apache.cordova.PluginResult;
+import org.apache.cordova.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -33,7 +22,6 @@ public class AMapPlugin extends CordovaPlugin {
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-        super.initialize(cordova, webView);
         activity = cordova.getActivity();
         context = cordova.getContext();
         threadPool = cordova.getThreadPool();
@@ -58,7 +46,7 @@ public class AMapPlugin extends CordovaPlugin {
             result.setKeepCallback(true);
             callbackContext.sendPluginResult(result);
             getWeatherInfo(callbackContext, args);
-        }else {
+        } else {
             LOG.i(TAG, "The Action" + action + "Not Exist");
             PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, "方法调用失败，不存在该方法");
             result.setKeepCallback(false);
@@ -66,7 +54,6 @@ public class AMapPlugin extends CordovaPlugin {
         }
         return true;
     }
-
 
     private interface MethodNames {
         String GET_LOCATION = "getLocation";
@@ -97,8 +84,8 @@ public class AMapPlugin extends CordovaPlugin {
 
     private void calculateDistance(CallbackContext callbackContext, JSONArray args) {
         try {
-            DPoint startPoint=new DPoint(args.getDouble(0),args.getDouble(1));
-            DPoint endPoint = new DPoint(args.getDouble(2),args.getDouble(3));
+            DPoint startPoint = new DPoint(args.getDouble(0), args.getDouble(1));
+            DPoint endPoint = new DPoint(args.getDouble(2), args.getDouble(3));
             float v = CoordinateConverter.calculateLineDistance(startPoint, endPoint);
             callbackContext.success(String.valueOf(v));
         } catch (JSONException e) {

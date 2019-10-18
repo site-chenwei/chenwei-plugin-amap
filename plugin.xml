@@ -73,7 +73,7 @@
                 <string>location</string>
             </array>
         </config-file>
-        <config-file target="*/*-Info.plist" parent="NSLocationAlwaysUsageDescription">
+        <config-file target="*/*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
             <string>为了确保您可以正确使用本应用，请选择允许</string>
         </config-file>
         <!--您申请的高德地图ios key更多详情请看http://www.jianshu.com/p/85aceaee3b35-->

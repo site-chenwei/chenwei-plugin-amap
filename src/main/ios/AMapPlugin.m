@@ -173,10 +173,10 @@ static NSString* const TYPE_KEY = @"type";
                 regeocode.adcode,ADCODE_KEY,
                 regeocode.province,PROVINCE_KEY,
                 regeocode.street,STREET_KEY,
-                regeocode.POIName,POI_NAME_KEY,
-                regeocode.AOIName,AOI_NAME_KEY,
                 regeocode.city,CITY_KEY,
                 regeocode.citycode,CITY_CODE_KEY,
+                regeocode.POIName,POI_NAME_KEY,
+                regeocode.AOIName,AOI_NAME_KEY,
                 nil]];
                 [weakSelf.commandDelegate sendPluginResult:pluginResult callbackId:weakSelf.callbackId];
                 weakSelf.callbackId = nil;

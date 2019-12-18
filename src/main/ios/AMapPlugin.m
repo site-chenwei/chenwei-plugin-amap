@@ -105,7 +105,7 @@ static NSString* const TYPE_KEY = @"type";
         //设置不允许系统暂停定位
         [self.locationManager setPausesLocationUpdatesAutomatically:NO];
         //设置允许在后台定位
-        [self.locationManager setAllowsBackgroundLocationUpdates:YES];
+        //[self.locationManager setAllowsBackgroundLocationUpdates:YES];
         //设置定位超时时间
         [self.locationManager setLocationTimeout:DefaultLocationTimeout];
         //设置逆地理超时时间

@@ -31,7 +31,9 @@ typedef void (^AMapLocatingCompletionBlock)(CLLocation *location, AMapLocationRe
 ///设定定位的最小更新距离。单位米，默认为 kCLDistanceFilterNone，表示只要检测到设备位置发生变化就会更新位置信息。
 @property(nonatomic, assign) CLLocationDistance distanceFilter;
 
-///设定期望的定位精度。单位米，默认为 kCLLocationAccuracyBest。定位服务会尽可能去获取满足desiredAccuracy的定位结果，但不保证一定会得到满足期望的结果。 \n注意：设置为kCLLocationAccuracyBest或kCLLocationAccuracyBestForNavigation时，单次定位会在达到locationTimeout设定的时间后，将时间内获取到的最高精度的定位结果返回。
+///设定期望的定位精度。单位米，默认为 kCLLocationAccuracyBest。定位服务会尽可能去获取满足desiredAccuracy的定位结果，但不保证一定会得到满足期望的结果。
+///注意：设置为kCLLocationAccuracyBest或kCLLocationAccuracyBestForNavigation时，单次定位会在达到locationTimeout设定的时间后，将时间内获取到的最高精度的定位结果返回。
+///⚠️ 当iOS14及以上时，模糊定位权限下可能拿不到设置精度的经纬度
 @property(nonatomic, assign) CLLocationAccuracy desiredAccuracy;
 
 ///指定定位是否会被系统自动暂停。默认为NO。
@@ -49,7 +51,7 @@ typedef void (^AMapLocatingCompletionBlock)(CLLocation *location, AMapLocationRe
 ///连续定位是否返回逆地理信息，默认NO。
 @property (nonatomic, assign) BOOL locatingWithReGeocode;
 
-// 逆地址语言类型，默认是AMapLocationRegionLanguageDefault
+///逆地址语言类型，默认是AMapLocationRegionLanguageDefault
 @property (nonatomic, assign) AMapLocationReGeocodeLanguage reGeocodeLanguage;
 
 ///获取被监控的region集合。
@@ -57,6 +59,38 @@ typedef void (^AMapLocatingCompletionBlock)(CLLocation *location, AMapLocationRe
 
 ///检测是否存在虚拟定位风险，默认为NO，不检测。 \n注意:设置为YES时，单次定位通过 AMapLocatingCompletionBlock 的error给出虚拟定位风险提示；连续定位通过 amapLocationManager:didFailWithError: 方法的error给出虚拟定位风险提示。error格式为 error.domain==AMapLocationErrorDomain; error.code==AMapLocationErrorRiskOfFakeLocation; \n附带的error的详细信息参考 error.localizedDescription 中的描述以及 error.userInfo 中的信息(error.userInfo.AMapLocationRiskyLocateResult 表示有虚拟风险的定位结果; error.userInfo.AMapLocationAccessoryInfo 表示外接辅助设备信息)。
 @property (nonatomic, assign) BOOL detectRiskOfFakeLocation;
+
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 140000
+
+/**
+ *  @brief 设置预期定位精度权限模式，默认为CLAccuracyAuthorizationFullAccuracy精确模式。
+    注意：如果定位时未获得定位权限，则首先会调用申请定位权限API，实际定位精度权限取决于用户的权限设置，当前定位精度权限可通过currentAuthorization获取；如果定位时已获得定位模糊权限，该属性设置CLAccuracyAuthorizationFullAccuracy，则会触发回调amapLocationManager:doRequireTemporaryFullAccuracyAuth:completion:，需在该回调中实现调用申请临时精确定位权限API，如果用户选择拒绝，则可以在completion回调中设置ignoreAuthMatch控制是否要继续开启模糊定位；如果定位时已获得精确定位权限，则可通过desiredAccuracy参数设定期望的定位精度；
+ *  @since 2.6.7
+ */
+//@property (nonatomic, assign) CLAccuracyAuthorization desiredAccuracyMode API_AVAILABLE(ios(14.0));
+
+/**
+ *  @brief 设置定位数据回调精度模式，默认为AMapLocationAccuracyFullAndReduce。
+    注意：如果定位时未获得定位权限，则首先会调用申请定位权限API，实际定位精度权限取决于用户的权限设置。
+ *  ————————————————————————————————————————————————————————————————
+ *  |                       设置选项                           | doRequireTemporaryFullAccuracyAuth  |                                异常/定位数据回调                                    |
+ *  | AMapLocationFullAndReduceAccuracy |        会触发申请临时精确定位回调          |   如果未获得精确定位权限，则依然开启定位，回调模糊定位 |
+ *  |          AMapLocationFullAccuracy           |        会触发申请临时精确定位回调          |   如果未获得精确定位权限，则不开启定位，回调error           |
+ *  |       AMapLocationReduceAccuracy       |       不会触发申请临时精确定位回调        |                 根据当前定位精度权限，回调定位数据                   |
+ *  ————————————————————————————————————————————————————————————————
+ *  当设置AMapLocationFullAndReduceAccuracy时，定位数据回调可通过currentAuthorization判断当前是否是精确定位
+ *  @since 2.6.7
+ */
+@property (nonatomic, assign) AMapLocationAccuracyMode locationAccuracyMode API_AVAILABLE(ios(14.0));
+
+/**
+ *  @brief 获取当前定位精度权限。注意：可能与setAccuracyAuthorizationMode设置不一致
+ *  @since 2.6.7
+ */
+@property (nonatomic, readonly) CLAccuracyAuthorization currentAuthorization API_AVAILABLE(ios(14.0));
+
+#endif
 
 /**
  *  @brief 设备是否支持方向识别
@@ -124,9 +158,27 @@ typedef void (^AMapLocatingCompletionBlock)(CLLocation *location, AMapLocationRe
 
 @optional
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 140000
+
+/**
+ *  @brief 当plist配置NSLocationTemporaryUsageDescriptionDictionary且desiredAccuracyMode设置CLAccuracyAuthorizationFullAccuracy精确定位模式时，如果用户只授权模糊定位，会调用代理的此方法。此方法实现调用申请临时精确定位权限API即可：
+ *  [manager requestTemporaryFullAccuracyAuthorizationWithPurposeKey:@"PurposeKey" completion:^(NSError *error){
+ *     if(completion){
+ *        completion(error);
+ *     }
+ *  }]; (必须调用,不然无法正常获取临时精确定位权限)
+ *  @param manager 定位 AMapLocationManager 类。
+ *  @param locationManager 需要申请临时精确定位权限的locationManager。
+ *  @param completion 临时精确定位权限API回调结果，error: 直接返回系统error即可。
+ *  @since 2.6.7
+ */
+- (void)amapLocationManager:(AMapLocationManager *)manager doRequireTemporaryFullAccuracyAuth:(CLLocationManager*)locationManager completion:(void(^)(NSError *error))completion;
+
+#endif
+
 /**
  *  @brief 当plist配置NSLocationAlwaysUsageDescription或者NSLocationAlwaysAndWhenInUseUsageDescription，并且[CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined，会调用代理的此方法。
-     此方法实现调用申请后台权限API即可：[locationManager requestAlwaysAuthorization](必须调用,不然无法正常获取定位权限)
+     此方法实现调用申请后台权限API即可：[locationManager requestAlwaysAuthorization] (必须调用,不然无法正常获取定位权限)
  *  @param manager 定位 AMapLocationManager 类。
  *  @param locationManager  需要申请后台定位权限的locationManager。
  *  @since 2.6.2
@@ -156,11 +208,18 @@ typedef void (^AMapLocatingCompletionBlock)(CLLocation *location, AMapLocationRe
 - (void)amapLocationManager:(AMapLocationManager *)manager didUpdateLocation:(CLLocation *)location reGeocode:(AMapLocationReGeocode *)reGeocode;
 
 /**
- *  @brief 定位权限状态改变时回调函数
+ *  @brief 定位权限状态改变时回调函数。注意：iOS13及之前版本回调
  *  @param manager 定位 AMapLocationManager 类。
  *  @param status 定位权限状态。
  */
 - (void)amapLocationManager:(AMapLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status;
+
+/**
+ *  @brief 定位权限状态改变时回调函数。注意：iOS14及之后版本回调
+ *  @param manager 定位 AMapLocationManager 类。
+ *  @param locationManager  定位CLLocationManager类，可通过locationManager.authorizationStatus获取定位权限，通过locationManager.accuracyAuthorization获取定位精度权限
+ */
+- (void)amapLocationManager:(AMapLocationManager *)manager locationManagerDidChangeAuthorization:(CLLocationManager*)locationManager;
 
 /**
  *  @brief 是否显示设备朝向校准

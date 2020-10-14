@@ -3,7 +3,7 @@
 //  MAMapKitNew
 //
 //  Created by xiaoming han on 14-5-4.
-//  Copyright (c) 2014年 AutoNavi. All rights reserved.
+//  Copyright (c) 2014年 Amap. All rights reserved.
 //
 
 #import "MAOverlayView.h"
@@ -21,7 +21,7 @@
 
 /*!
  @brief 根据指定的tileOverlay生成MAOverlayView
- @param tileOverlay 数据源
+ @param overlay 数据源
  @return 初始化成功则返回overlayView,否则返回nil
  */
 - (id)initWithTileOverlay:(MATileOverlay *)overlay;

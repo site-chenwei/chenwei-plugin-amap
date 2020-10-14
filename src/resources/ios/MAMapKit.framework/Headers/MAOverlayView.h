@@ -3,7 +3,7 @@
 //  MAMapKitNew
 //
 //  Created by AutoNavi.
-//  Copyright (c) 2014年 AutoNavi. All rights reserved.
+//  Copyright (c) 2014年 Amap. All rights reserved.
 //
 
 #import "MAGeometry.h"

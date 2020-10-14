@@ -21,6 +21,7 @@ typedef NS_ENUM(NSInteger, AMapGeoFenceErrorCode) {
     AMapGeoFenceErrorFailureAuth  = 4,               ///< 鉴权失败
     AMapGeoFenceErrorNoValidFence = 5,               ///< 无可用围栏
     AMapGeoFenceErroFailureLocating = 6,             ///< 定位错误
+    AMapGeoFenceErroFailureFullAccuracyLocating = 7, ///< 精确定位错误
 };
 
 #endif /* AMapGeoFenceError_h */

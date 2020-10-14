@@ -28,6 +28,7 @@ typedef NS_ENUM(NSInteger, AMapLocationErrorCode)
     AMapLocationErrorCannotConnectToHost = 9,   ///<服务器连接失败
     AMapLocationErrorRegionMonitoringFailure=10,///<地理围栏错误
     AMapLocationErrorRiskOfFakeLocation = 11,   ///<存在虚拟定位风险
+    AMapLocationErrorNoFullAccuracyAuth = 12,   ///<精确定位权限异常
 };
 
 ///AMapLocation Region State
@@ -44,6 +45,13 @@ typedef NS_ENUM(NSInteger, AMapLocationReGeocodeLanguage)
     AMapLocationReGeocodeLanguageDefault = 0,          ///<默认，根据地区选择语言
     AMapLocationReGeocodeLanguageChinse = 1,           ///<中文
     AMapLocationReGeocodeLanguageEnglish = 2,          ///<英文
+};
+
+///AMapLocation Accuracy Mode
+typedef NS_ENUM(NSInteger, AMapLocationAccuracyMode) {
+    AMapLocationFullAndReduceAccuracy = 0,
+    AMapLocationFullAccuracy,
+    AMapLocationReduceAccuracy
 };
 
 ///逆地理信息

@@ -165,26 +165,41 @@ typedef NS_OPTIONS(NSUInteger, AMapGeoFenceRegionActiveStatus)
  */
 - (void)removeTheGeoFenceRegion:(AMapGeoFenceRegion *)region;
 
-
 /**
  * @brief 移除指定customID的围栏
  * @param customID 用户执行添加围栏函数时传入的customID
  */
 - (void)removeGeoFenceRegionsWithCustomID:(NSString *)customID;
 
-
 /**
  * @brief 移除所有围栏
  */
 - (void)removeAllGeoFenceRegions;
 
-
 @end
-
-
 
 ///地理围栏代理协议（since 2.3.0）,该协议定义了获取地理围栏相关回调方法，包括添加、状态改变等。
 @protocol AMapGeoFenceManagerDelegate <NSObject>
+
+@required
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 140000
+
+/**
+ *  @brief iOS14及以上版本使用地理围栏功能，需要在plist中配置NSLocationTemporaryUsageDescriptionDictionary字典描述，且添加自定义Key描述地理围栏的使用场景，此描述会在申请临时精确定位权限的弹窗中展示。该回调触发条件：拥有定位权限，但是没有获得精确定位权限的情况下，会触发该回调。此方法实现调用申请临时精确定位权限API即可：
+ *   [manager requestTemporaryFullAccuracyAuthorizationWithPurposeKey:@"PurposeKey" completion:^(NSError *error){
+ *     if(completion){
+ *       completion(error);
+ *     }
+ *   }]; (必须调用,不然无法正常获取临时精确定位权限)
+ *  @param manager 地理围栏管理类。
+ *  @param locationManager 需要申请临时精确定位权限的locationManager。
+ *  @param completion 临时精确定位权限API回调结果。直接返回系统error即可
+ *  @since 2.6.7
+ */
+- (void)amapLocationManager:(AMapGeoFenceManager *)manager doRequireTemporaryFullAccuracyAuth:(CLLocationManager*)locationManager completion:(void(^)(NSError *error))completion;
+
+#endif
 
 @optional
 

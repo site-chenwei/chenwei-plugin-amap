@@ -282,6 +282,13 @@ typedef NS_ENUM(NSInteger, AMapTruckSizeType)
 @property (nonatomic, assign) BOOL      requireExtension; 
 ///是否显示商圈信息，默认NO。注：已废弃，行政区划搜索无商圈信息。
 @property (nonatomic, assign) BOOL      showBusinessArea __attribute__((deprecated("已废弃, from 5.3.0")));;
+///每页记录数, 范围1-50, [default = 20]
+@property (nonatomic, assign) NSInteger  offset;
+///当前页数, 范围1-100, [default = 1]
+@property (nonatomic, assign) NSInteger  page;
+///子区域层级，默认1。规则：设置显示下级行政区级数（行政区级别包括：国家、省/直辖市、市、区/县、乡镇/街道多级数据）可选值：0、1、2、3等数字，0-不返回下级行政区；1-返回下一级行政区；2-返回下两级行政区；3-返回下三级行政区
+@property (nonatomic, assign) NSInteger subdistrict;
+
 @end
 
 ///行政区划响应

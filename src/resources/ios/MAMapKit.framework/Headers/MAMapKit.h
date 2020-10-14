@@ -3,7 +3,7 @@
 //  MAMapKit
 //
 //  Created by xiaoming han on 15/12/7.
-//  Copyright © 2015年 AutoNavi. All rights reserved.
+//  Copyright © 2015年 Amap. All rights reserved.
 //
 
 #import <MAMapKit/MAMapVersion.h>

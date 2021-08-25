@@ -42,16 +42,16 @@ typedef NS_ENUM(NSInteger, AMapLocationRegionState)
 ///AMapLocation Region Language
 typedef NS_ENUM(NSInteger, AMapLocationReGeocodeLanguage)
 {
-    AMapLocationReGeocodeLanguageDefault = 0,          ///<默认，根据地区选择语言
-    AMapLocationReGeocodeLanguageChinse = 1,           ///<中文
-    AMapLocationReGeocodeLanguageEnglish = 2,          ///<英文
+    AMapLocationReGeocodeLanguageDefault = 0,   ///<默认，根据地区选择语言
+    AMapLocationReGeocodeLanguageChinse = 1,    ///<中文
+    AMapLocationReGeocodeLanguageEnglish = 2,   ///<英文
 };
 
 ///AMapLocation Accuracy Mode
 typedef NS_ENUM(NSInteger, AMapLocationAccuracyMode) {
-    AMapLocationFullAndReduceAccuracy = 0,
-    AMapLocationFullAccuracy,
-    AMapLocationReduceAccuracy
+    AMapLocationFullAndReduceAccuracy = 0,      ///<默认模式，该模式下会申请临时精确定位权限，如果用户拒绝，则依然开启定位，回调模糊定位数据；
+    AMapLocationFullAccuracy,                   ///<高精度模式，该模式下会申请临时精确定位权限，如果用户拒绝，则回调error；
+    AMapLocationReduceAccuracy                  ///<低精度模式，该模式下不会申请临时精确定位权限，根据当前定位权限回调定位数据；
 };
 
 ///逆地理信息
@@ -200,3 +200,4 @@ FOUNDATION_EXTERN CLLocationCoordinate2D AMapLocationCoordinateConvert(CLLocatio
  *  @return 是否在大陆以及港、澳地区
  */
 FOUNDATION_EXTERN BOOL AMapLocationDataAvailableForCoordinate(CLLocationCoordinate2D coordinate);
+

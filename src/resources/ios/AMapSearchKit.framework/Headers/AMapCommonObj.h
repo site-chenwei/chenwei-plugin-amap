@@ -295,6 +295,8 @@
 @interface AMapAddressComponent : AMapSearchObject
 ///国家（since 5.7.0）
 @property (nonatomic, copy)   NSString         *country;
+///国家简码（since 7.4.0）仅海外生效
+@property (nonatomic, copy)   NSString         *countryCode;
 ///省/直辖市
 @property (nonatomic, copy)   NSString         *province; 
 ///市
@@ -360,6 +362,10 @@
 @property (nonatomic, copy) AMapGeoPoint *location; 
 ///匹配的等级
 @property (nonatomic, copy) NSString     *level;
+///国家（since 7.4.0）仅海外生效
+@property (nonatomic, copy)   NSString   *country;
+///国家简码（since 7.4.0）仅海外生效
+@property (nonatomic, copy)   NSString   *postcode;
 @end
 
 #pragma mark - 公交查询
@@ -521,6 +527,9 @@
  5，终点限行
  */
 @property (nonatomic, assign) NSInteger restriction;
+///规划路径完整坐标点串集合（since 7.4.0）
+@property (nonatomic, copy)   NSString  *polyline;
+
 @end
 
 @interface AMapFutureTimeInfoElement : AMapSearchObject
@@ -819,7 +828,7 @@
 
 @end
 
-#pragma mark - 云图基础数据类型
+#pragma mark - 企业地图基础数据类型
 
 ///POI点的图片信息
 @interface AMapCloudImage : AMapSearchObject
@@ -847,8 +856,9 @@
 @property (nonatomic, copy)   NSString     *createTime; 
 ///更新时间
 @property (nonatomic, copy)   NSString     *updateTime; 
-///离当前位置的距离(只在云图周边搜索时有效)
+///离当前位置的距离(只在企业地图周边搜索时有效)
 @property (nonatomic, assign) NSInteger     distance; 
 ///图片信息
-@property (nonatomic, strong) NSArray<AMapCloudImage *> *images;
+@property (nonatomic, strong) NSArray<AMapCloudImage *> *images __attribute((deprecated("已废弃 since 7.4.0")));
+
 @end

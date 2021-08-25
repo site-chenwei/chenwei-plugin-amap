@@ -73,13 +73,13 @@
  * @param info 需要上传的信息。
  * @return 成功执行返回YES，否则返回NO。
  */
-- (BOOL)uploadNearbyInfo:(AMapNearbyUploadInfo *)info;
+- (BOOL)uploadNearbyInfo:(AMapNearbyUploadInfo *)info __attribute((deprecated("已废弃 since 7.4.0，该功能不再支持")));
 
 /**
  * @brief 清除服务器上某一用户的信息。
  * @param userID 指定的用户ID
  * @return 成功执行返回YES，否则返回NO。
  */
-- (BOOL)clearUserInfoWithID:(NSString *)userID;
+- (BOOL)clearUserInfoWithID:(NSString *)userID __attribute((deprecated("已废弃 since 7.4.0，该功能不再支持")));
 
 @end

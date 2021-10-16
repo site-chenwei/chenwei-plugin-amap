@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="chenwei-plugin-amap"
-        version="1.2.0">
+        version="2.0.8">
     <name>AMapPlugin</name>
     <description>高德地图插件</description>
     <author email="1458010118@qq.com" href="http://www.chenwei.site">陈炜</author>
@@ -30,7 +30,6 @@
             <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
             <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
             <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-            <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
             <!--用于访问网络，网络定位需要上网-->
             <uses-permission android:name="android.permission.INTERNET"/>
             <!--用于读取手机当前的状态-->
@@ -39,13 +38,10 @@
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
             <!--用于申请调用A-GPS模块-->
             <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
-            <!--用于申请获取蓝牙信息进行室内定位-->
-            <uses-permission android:name="android.permission.BLUETOOTH"/>
-            <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-            <!-- 允许应用读取低级别的系统日志文件 -->
-            <uses-permission android:name="android.permission.READ_LOGS"/>
-            <!-- 更改设置 -->
-            <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+            <!--如果设置了target >= 28 如果需要启动后台定位则必须声明这个权限-->
+            <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+            <!--如果您的应用需要后台定位权限，且有可能运行在Android Q设备上,并且设置了target>28，必须增加这个权限声明-->
+            <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
@@ -85,6 +81,9 @@
         <framework src="src/resources/ios/AMapFoundationKit.framework" custom="true"/>
         <framework src="src/resources/ios/AMapLocationKit.framework" custom="true"/>
         <framework src="src/resources/ios/AMapSearchKit.framework" custom="true"/>
+        <framework src="src/resources/ios/MAMapKit.framework" custom="true"/>
+        <framework src="ExternalAccessory.framework"/>
+        <framework src="GLKit.framework"/>
         <source-file src="src/main/ios/AMapPlugin.m"/>
         <source-file src="src/main/ios/AMapPlugin.h"/>
     </platform>

@@ -1,1 +1,2 @@
 src/resources/ios/MAMapKit.framework filter=lfs diff=lfs merge=lfs -text
+src/resources/ios/MAMapKit.framework/MAMapKit filter=lfs diff=lfs merge=lfs -text

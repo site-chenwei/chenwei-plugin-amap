@@ -6,7 +6,6 @@
 //  Copyright © 2016 Amap. All rights reserved.
 //
 
-#import "MAConfig.h"
 #import "MACircle.h"
 #import "MAOverlayPathRenderer.h"
 

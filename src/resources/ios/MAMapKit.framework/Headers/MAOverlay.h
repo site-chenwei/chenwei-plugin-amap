@@ -6,7 +6,6 @@
 //  Copyright (c) 2011年 Amap. All rights reserved.
 //
 
-#import "MAConfig.h"
 #import "MAAnnotation.h"
 #import "MAGeometry.h"
 
@@ -15,9 +14,9 @@
 @required
 
 ///返回区域中心坐标
-- (CLLocationCoordinate2D)coordinate;
+@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 
 ///区域外接矩形
-- (MAMapRect)boundingMapRect;
+@property (nonatomic, readonly) MAMapRect boundingMapRect;
 
 @end

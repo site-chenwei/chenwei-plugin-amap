@@ -6,7 +6,6 @@
 //  Copyright (c) 2011年 Amap. All rights reserved.
 //
 
-#import "MAConfig.h"
 #import <UIKit/UIKit.h>
 #import "MAPolygon.h"
 #import "MAOverlayPathRenderer.h"

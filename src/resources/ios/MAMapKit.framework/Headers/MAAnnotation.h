@@ -6,7 +6,6 @@
 //  Copyright (c) 2011年 Amap. All rights reserved.
 //
 
-#import "MAConfig.h"
 #import <CoreGraphics/CoreGraphics.h>
 #import <CoreLocation/CoreLocation.h>
 #import <Foundation/Foundation.h>
@@ -35,33 +34,33 @@
 @end
 
 /**
- * 支持动画需要实现的协议. since 4.5.0
+ * 支持动画需要实现的协议.
  */
 @protocol MAAnimatableAnnotation <NSObject>
 
 @required
 /**
- * @brief 动画帧更新回调接口，实现者可在内部做更新处理，如更新coordinate. （since 4.5.0）
+ * @brief 动画帧更新回调接口，实现者可在内部做更新处理，如更新coordinate.
  * @param timeDelta 时间步长，单位秒
  */
 - (void)step:(CGFloat)timeDelta;
 
 /**
- * @brief 动画是否已完成. 通过此方法判断是否需要将动画annotation移出渲染执行过程。（since 4.5.0）
+ * @brief 动画是否已完成. 通过此方法判断是否需要将动画annotation移出渲染执行过程。
  * @return YES动画已完成，NO没有完成
  */
 - (BOOL)isAnimationFinished;
 
 /**
- * @brief 动画是否可以开始. 通过此方法判断是否需要将动画annotation加入渲染过程，已经start且尚未finish的动画标注才会调用step方法。（since 6.0.0）
+ * @brief 动画是否可以开始. 通过此方法判断是否需要将动画annotation加入渲染过程，已经start且尚未finish的动画标注才会调用step方法。
  * @return YES 可以开始，NO 尚未开始。
  */
 - (BOOL)shouldAnimationStart;
 
 @optional
 /**
- * @brief 动画更新时调用此接口，获取annotationView的旋转角度，不实现默认为0. （since 4.5.0）
- * @return 当前annotation的旋转角度，正北为0度，顺时针方向。即正东90，正南180，正西270。
+ * @brief 动画更新时调用此接口，获取annotationView的旋转角度，不实现默认为0. 
+ * @return 当前annotation的旋转角度
  */
 - (CLLocationDirection)rotateDegree;
 

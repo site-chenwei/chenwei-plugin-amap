@@ -6,9 +6,6 @@
 //  Copyright © 2016 Amap. All rights reserved.
 //
 
-#import "MAConfig.h"
-#if MA_INCLUDE_OVERLAY_MAMultiPolyline
-
 #import "MAPolylineRenderer.h"
 #import "MAMultiPolyline.h"
 
@@ -21,9 +18,6 @@
 ///分段绘制的颜色,需要分段颜色绘制时，必须设置（内容必须为UIColor）。根据multiPolyline.drawStyleIndexes属性指示的索引进行渲染。
 @property (nonatomic, strong) NSArray<UIColor *> *strokeColors;
 
-///颜色是否渐变, 默认为NO。如果设置为YES，则为多彩渐变线。
-@property (nonatomic, getter=isGradient) BOOL gradient;
-
 /**
  * @brief 根据指定的MAPolyline生成一个多段线Renderer
  * @param multiPolyline 指定MAMultiPolyline
@@ -32,5 +26,3 @@
 - (instancetype)initWithMultiPolyline:(MAMultiPolyline *)multiPolyline;
 
 @end
-
-#endif

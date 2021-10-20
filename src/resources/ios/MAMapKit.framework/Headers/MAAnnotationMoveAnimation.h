@@ -6,12 +6,10 @@
 //  Copyright © 2016 Amap. All rights reserved.
 //
 
-
-#import "MAConfig.h"
 #import <Foundation/Foundation.h>
 #import "MAAnnotation.h"
 
-///annotation移动动画. since 4.5.0
+///annotation移动动画. 
 @interface MAAnnotationMoveAnimation : NSObject
 
 /**

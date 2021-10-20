@@ -1,6 +1,6 @@
 #import "AMapPlugin.h"
-#define DefaultLocationTimeout 10
-#define DefaultReGeocodeTimeout 10
+#define DefaultLocationTimeout 3
+#define DefaultReGeocodeTimeout 3
 static NSString* const LATITUDE_KEY = @"latitude";
 static NSString* const LONGITUDE_KEY = @"longitude";
 static NSString* const ADDRESS_KEY = @"address";

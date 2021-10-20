@@ -6,14 +6,14 @@
 //  Copyright © 2016 Amap. All rights reserved.
 //
 
-#import "MAConfig.h"
 #import <AMapFoundationKit/AMapFoundationVersion.h>
 
 #ifndef MAMapVersion_h
 #define MAMapVersion_h
 
-#define MAMapVersionNumber                80001
-#define MAMapMinRequiredFoundationVersion 10608
+#define MAMapVersionNumber                10200
+
+#define MAMapMinRequiredFoundationVersion 10605
 
 // 依赖库版本检测
 #if AMapFoundationVersionNumber < MAMapMinRequiredFoundationVersion
@@ -25,4 +25,3 @@ FOUNDATION_EXTERN NSString * const MAMapKitName;
 
 
 #endif /* MAMapVersion_h */
- 

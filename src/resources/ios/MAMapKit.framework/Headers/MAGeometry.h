@@ -6,7 +6,6 @@
 //  Copyright (c) 2013年 Amap. All rights reserved.
 //
 
-#import "MAConfig.h"
 #import <CoreGraphics/CoreGraphics.h>
 #import <CoreLocation/CoreLocation.h>
 #import <UIKit/UIKit.h>

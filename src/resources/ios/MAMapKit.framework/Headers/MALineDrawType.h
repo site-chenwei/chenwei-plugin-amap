@@ -6,8 +6,6 @@
 //  Copyright © 2016 Amap. All rights reserved.
 //
 
-#import "MAConfig.h"
-
 #ifndef MapKit_static_MALineDrawType_h
 #define MapKit_static_MALineDrawType_h
 
@@ -23,7 +21,6 @@ enum MALineCapType
 {
     kMALineCapButt,     ///< 普通头
     kMALineCapSquare,   ///< 扩展头
-    kMALineCapArrow,    ///< 箭头
     kMALineCapRound     ///< 圆形头
 };
 typedef enum MALineCapType MALineCapType;
@@ -33,7 +30,6 @@ enum MALineDashType
 {
     kMALineDashTypeNone = 0,     ///<不画虚线
     kMALineDashTypeSquare,       ///<方块样式
-    kMALineDashTypeDot,          ///<圆点样式
 };
 typedef enum MALineDashType MALineDashType;
 

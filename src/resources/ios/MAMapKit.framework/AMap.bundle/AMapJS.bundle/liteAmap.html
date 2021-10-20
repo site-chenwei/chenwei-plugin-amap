@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>地图显示</title>
+    <style>
+        html,
+        body{
+          margin:0px;
+          width: 100%;
+          height: 100%;
+        }
+        .hide-map {
+          width: 100px;
+          height: 100px;
+        }
+        .show-map {
+          width: 100%;
+          height: 100%;
+        }
+
+    </style>
+</head>
+<body>
+<!--避免后台有问题，size被设置为固定值,hide-map -->
+<div id="container" class="hide-map"></div>
+<script>
+    //使用webGL
+    window['forceWebGL'] = true
+    window['forceWebGLBaseRender'] = true;
+    window['startTime'] = new Date().getTime();
+    var paramArr = decodeURI(window.location.href.split("?")[1]).split("&");
+    var foreignStyle = undefined;
+    var language = undefined;
+    window['amap_sdk_is_ios'] = false;
+    window['amap_sdk_is_debug'] = false;
+    window['amap_sdk_is_load_worker_js'] = false;
+    
+    for(var i = 0;i < paramArr.length; i++){
+        var tempParam = paramArr[i].split("=");
+        if(tempParam[0] == 'platform'){
+            window['amap_sdk_is_ios'] = (tempParam[1] == 'iOS');
+        } else if(tempParam[0] == 'foreignStyle'){
+            foreignStyle = tempParam[1];
+        } else if(tempParam[0] == 'isDebug'){
+            window['amap_sdk_is_debug'] = (tempParam[1] == 'true');
+        } else if(tempParam[0] == 'isPreLoadWorkerJs'){
+            window['amap_sdk_is_load_worker_js'] = (tempParam[1] == 'true');
+        } else if(tempParam[0] == 'language'){
+            language = tempParam[1];
+        }
+    }
+
+    if (window['amap_sdk_is_load_worker_js']) {
+        //加载worker.js, 名称和路径必须为 javascripts/amap_sdk_worker.js
+        document.write('<script language=javascript src="javascripts/amap_sdk_worker.js"><\/script>');
+    }
+
+    if(!window['amap_sdk_is_ios']){
+        //加载JS-platform
+        document.write('<script language=javascript src="javascripts/amap_sdk_platform.min.js"><\/script>');
+    }
+    if (!window['amap_sdk_is_ios']) {
+        document.write('<script>amap_sdk_log("startTime " \+ window\["startTime"\])<\/script>');
+        //加载JS-API
+        document.write('<script>amap_sdk_log("maps JS开始加载")<\/script>');
+        document.write('<script language=javascript src="http://webapi.amap.com/maps?v=2.0&key=dc695ce0c94242cb2f1eaddfe6ba580e"><\/script>');
+        document.write('<script>amap_sdk_log("maps JS加载完成")<\/script>');
+        //加载JS-control
+        document.write('<script language=javascript src="javascripts/amap_sdk_control.min.js" onload="onScriptLoad()"><\/script>');
+    }
+
+</script>
+</body>
+</html>
+

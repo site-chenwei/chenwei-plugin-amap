@@ -28,15 +28,77 @@ static NSString* const TYPE_KEY = @"type";
 @property (nonatomic, strong) AMapSearchAPI *search;
 @property (nullable, copy) NSArray<NSExpression *> *arguments;
 @property (nonatomic, strong) AMapLocationManager *locationManager;
+@property (nonatomic, strong) AMapGeoFenceManager *geoFenceManager;
 @property (nonatomic, copy) AMapLocatingCompletionBlock completionBlock;
 @property (nonatomic, strong) NSString *appendAddress;
-
-
+@property NSMutableArray *callbackIds;
 - (void)getLocation:(CDVInvokedUrlCommand*)command;
 - (void)calculateDistance:(CDVInvokedUrlCommand*)command;
 - (void)getWeatherInfo:(CDVInvokedUrlCommand*)command;
+- (void)addGeofence:(CDVInvokedUrlCommand*)command;
+- (void)onGeofenceResult:(CDVInvokedUrlCommand*)command;
 @end
 @implementation AMapPlugin
+
+- (void)amapGeoFenceManager:(AMapGeoFenceManager *)manager didAddRegionForMonitoringFinished:(NSArray<AMapGeoFenceRegion *> *)regions customID:(NSString *)customID error:(NSError *)error {
+    if (error) {
+        NSLog(@"创建失败 %@",error);
+    } else {
+        NSLog(@"创建成功");
+    }
+}
+- (void)amapGeoFenceManager:(AMapGeoFenceManager *)manager didGeoFencesStatusChangedForRegion:(AMapGeoFenceRegion *)region customID:(NSString *)customID error:(NSError *)error {
+    if (error) {
+        NSLog(@"status changed error %@",error);
+    }else{
+        NSLog(@"status changed success %ld",[region description]);
+        NSNumber *status;
+        switch (region.fenceStatus) {
+            case AMapGeoFenceRegionStatusInside:
+                status=@1;
+                break;
+            case AMapGeoFenceRegionStatusOutside:
+                status=@2;
+                break;
+            case AMapGeoFenceRegionStatusStayed:
+                status=@4;
+                break;
+            default:
+                status=@0;
+                break;
+        }
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
+            customID,@"customId",
+            status,@"status",
+            nil]];
+        NSEnumerator *emu=[self.callbackIds objectEnumerator];
+        id object;
+        while (object=[emu nextObject]) {
+             [self.commandDelegate sendPluginResult:pluginResult callbackId:object];
+        }
+    }
+}
+- (void)addGeofence:(CDVInvokedUrlCommand*)command {
+    [AMapServices sharedServices].apiKey = [self appKeyConfig];
+    self.geoFenceManager = [[AMapGeoFenceManager alloc] init];
+    self.geoFenceManager.delegate = self;
+    self.geoFenceManager.activeAction = AMapGeoFenceActiveActionInside | AMapGeoFenceActiveActionOutside | AMapGeoFenceActiveActionStayed;
+    self.geoFenceManager.allowsBackgroundLocationUpdates = YES;
+    NSString *myarg1 = [command.arguments objectAtIndex:0];
+    NSString *myarg2 = [command.arguments objectAtIndex:1];
+    NSString *myarg3 = [command.arguments objectAtIndex:2];
+    NSString *myarg4 = [command.arguments objectAtIndex:3];
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([myarg1 doubleValue], [myarg2 doubleValue]);
+    [self.geoFenceManager addCircleRegionForMonitoringWithCenter:coordinate radius:[myarg3 doubleValue] customID:myarg4];
+}
+- (void)onGeofenceResult:(CDVInvokedUrlCommand*)command {
+    if (self.callbackIds==nil) {
+        NSMutableArray *array=[NSMutableArray array];
+        self.callbackIds=array;
+    }
+    [self.callbackIds addObject:command.callbackId];
+}
+
 - (NSString *)appKeyConfig {
   if(!_appKeyConfig){
       NSString *path = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];

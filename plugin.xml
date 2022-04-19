@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="chenwei-plugin-amap"
-        version="2.1.1">
+        version="2.1.6">
     <name>AMapPlugin</name>
     <description>高德地图插件</description>
     <author email="1458010118@qq.com" href="http://www.chenwei.site">陈炜</author>
@@ -56,6 +56,7 @@
         <source-file src="src/main/android/AMapPlugin.java" target-dir="src/com/chenwei116057/plugin"/>
         <source-file src="src/main/android/AMapLocationListener.java" target-dir="src/com/chenwei116057/plugin"/>
         <source-file src="src/main/android/AMapWeatherSearchListener.java" target-dir="src/com/chenwei116057/plugin"/>
+        <source-file src="src/main/android/AMapGeofenceListener.java" target-dir="src/com/chenwei116057/plugin"/>
         <lib-file src="src/resources/android/AMap.jar"/>
     </platform>
     <platform name="ios">

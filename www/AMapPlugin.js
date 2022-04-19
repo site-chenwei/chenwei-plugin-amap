@@ -11,11 +11,8 @@ AMapPlugin.prototype.getWeatherInfo = function (params, success, fail) {
 AMapPlugin.prototype.calculateDistance = function (params, success, fail) {
     cordova.exec(success, fail, 'AMapPlugin', 'calculateDistance', [params.startLatitude, params.startLongitude, params.endLatitude, params.endLongitude]);
 }
-AMapPlugin.prototype.geofenceResult = function (params, success, fail) {
-    cordova.exec(success, fail, 'AMapPlugin', 'geofenceResult', []);
-}
-AMapPlugin.prototype.clearGeofence = function (params, success, fail) {
-    cordova.exec(success, fail, 'AMapPlugin', 'clearGeofence', []);
+AMapPlugin.prototype.onGeofenceResult = function (params, success, fail) {
+    cordova.exec(success, fail, 'AMapPlugin', 'onGeofenceResult', []);
 }
 AMapPlugin.prototype.addGeofence = function (params, success, fail) {
     cordova.exec(success, fail, 'AMapPlugin', 'addGeofence', [params.latitude, params.longitude, params.length, params.customId]);

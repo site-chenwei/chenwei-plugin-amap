@@ -36,6 +36,8 @@ static NSString* const TYPE_KEY = @"type";
 - (void)calculateDistance:(CDVInvokedUrlCommand*)command;
 - (void)getWeatherInfo:(CDVInvokedUrlCommand*)command;
 - (void)addGeofence:(CDVInvokedUrlCommand*)command;
+- (void)removeGeofence:(CDVInvokedUrlCommand*)command;
+- (void)clearGeofence:(CDVInvokedUrlCommand*)command;
 - (void)onGeofenceResult:(CDVInvokedUrlCommand*)command;
 @end
 @implementation AMapPlugin
@@ -90,6 +92,17 @@ static NSString* const TYPE_KEY = @"type";
     NSString *myarg4 = [command.arguments objectAtIndex:3];
     CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([myarg1 doubleValue], [myarg2 doubleValue]);
     [self.geoFenceManager addCircleRegionForMonitoringWithCenter:coordinate radius:[myarg3 doubleValue] customID:myarg4];
+}
+- (void)removeGeofence:(CDVInvokedUrlCommand*)command {
+    NSString *customId = [command.arguments objectAtIndex:0];
+    [self.geoFenceManager removeGeoFenceRegionsWithCustomID:customId];
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+- (void)clearGeofence:(CDVInvokedUrlCommand*)command {
+    [self.geoFenceManager removeAllGeoFenceRegions];
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 - (void)onGeofenceResult:(CDVInvokedUrlCommand*)command {
     if (self.callbackIds==nil) {

@@ -32,7 +32,21 @@ export class AMapPlugin extends IonicNativePlugin {
     };
 
     onGeofenceResult(): Observable<GeoFenceResult | void> {
-        return cordova(this, "onGeofenceResult", {observable: true}, arguments);
+        return new Observable<GeoFenceResult | void>((observer: any) => {
+            // @ts-ignore
+            window.AMapPlugin.onGeofenceResult(
+                observer.next.bind(observer),
+                observer.next.bind(observer)
+            );
+        });
+    };
+
+    removeGeofence(params: { customId: string }): Promise<void> {
+        return cordova(this, "removeGeofence", {}, arguments);
+    };
+
+    clearGeofence(): Promise<void> {
+        return cordova(this, "clearGeofence", {}, arguments);
     };
 }
 

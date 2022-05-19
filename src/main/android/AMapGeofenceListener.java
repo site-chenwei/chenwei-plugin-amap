@@ -30,7 +30,7 @@ public class AMapGeofenceListener extends BroadcastReceiver implements GeoFenceL
         if (customId != null) {
             try {
                 jsonObject.put("customId", customId);
-                jsonObject.put("status", 2);
+                jsonObject.put("status", status);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

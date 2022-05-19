@@ -19,6 +19,10 @@ export declare class AMapPlugin extends IonicNativePlugin {
         customId: string;
     }): Promise<number | void>;
     onGeofenceResult(): Observable<GeoFenceResult | void>;
+    removeGeofence(params: {
+        customId: string;
+    }): Promise<void>;
+    clearGeofence(): Promise<void>;
 }
 export interface LocationResult {
     /**

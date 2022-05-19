@@ -17,4 +17,10 @@ AMapPlugin.prototype.onGeofenceResult = function (params, success, fail) {
 AMapPlugin.prototype.addGeofence = function (params, success, fail) {
     cordova.exec(success, fail, 'AMapPlugin', 'addGeofence', [params.latitude, params.longitude, params.length, params.customId]);
 }
+AMapPlugin.prototype.removeGeofence = function (params, success, fail) {
+    cordova.exec(success, fail, 'AMapPlugin', 'removeGeofence', [params.customId]);
+}
+AMapPlugin.prototype.clearGeofence = function (params, success, fail) {
+    cordova.exec(success, fail, 'AMapPlugin', 'clearGeofence', []);
+}
 module.exports = new AMapPlugin();
